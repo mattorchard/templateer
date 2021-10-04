@@ -62,7 +62,12 @@
 		</button>
 	</header>
 	{#if params.length === 0}
-		<p>Once you add some parameters to the SQL on the right, they'll be listed here.</p>
+		<p>
+			Once you add some parameters to the SQL on the right, they'll be listed here.
+		</p>
+		<p>
+			Parameters take the form <em>$1</em>, <em>$2</em>, <em>$3</em>, ... <em>$n</em>
+		</p>
 	{/if}
 	<ol>
 		{#each params as param}
@@ -145,5 +150,14 @@
 	}
   .icon-button:is(:hover, :focus) {
 		background-color: var(--grey-600);
+	}
+	p {
+		background-color: var(--grey-600);
+		padding: .5rem;
+	}
+	em {
+		color: var(--blue-600);
+		font-style: normal;
+		font-weight: bold;
 	}
 </style>
