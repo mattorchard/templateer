@@ -8,6 +8,9 @@
 	--blue-300: #0E639C;
 	--blue-500: #007ACC;
 	--blue-600: #007FD4;
+	--red-500: #cc0000;
+	--yellow-500: #cca300;
+	--green-500: #55dc13;
 }
 input:focus {
 	outline: none;

@@ -5,6 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { FilledParam } from '$lib/helpers/paramHelpers';
 	import { readFromClipboard, writeToClipboard } from '$lib/helpers/clipboardHelpers';
+	import { notificationsStore } from '$lib/stores/notificationsStore';
 	export let params: Param[];
 	const dispatch = createEventDispatcher();
 
@@ -26,8 +27,9 @@
 		try {
 			const paramRows = params.map(param => fillValuesMap[param.label] ?? "");
 			await writeToClipboard(JSON.stringify(paramRows))
-			// Todo: Notification message
+			notificationsStore.info("Copied params");
 		} catch (error) {
+			notificationsStore.danger("Failed to copy params");
 			console.error("Failed to copy params", error)
 		}
 	}
@@ -43,9 +45,10 @@
 				const index = param.id - 1;
 				fillValuesMap[param.label] = rows[index] ?? fillValuesMap[param.label];
 			})
+			notificationsStore.info("Pasted params");
 		} catch (error) {
+			notificationsStore.danger("Failed to paste params");
 			console.error("Failed to paste params", error);
-			// Todo: Notification
 		}
 	}
 

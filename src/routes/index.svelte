@@ -8,6 +8,8 @@
 	import Footer from '$lib/Footer.svelte';
 	import { applyFilledParams, FilledParam, getParams, Param } from '$lib/helpers/paramHelpers';
 	import { writeToClipboard } from '$lib/helpers/clipboardHelpers';
+	import Toaster from '$lib/Toaster.svelte';
+	import { notificationsStore } from '$lib/stores/notificationsStore';
 
 	let editorText = [
 		`SELECT *`,
@@ -25,7 +27,7 @@
 		const transformedText = applyFilledParams(editorText, filledParams);
 		console.log('Copied output', transformedText);
 		writeToClipboard(transformedText);
-		// Todo: Show notification
+		notificationsStore.info("Copied to clipboard");
 	};
 
 </script>
@@ -39,6 +41,7 @@
 	</main>
 	<Footer />
 </div>
+<Toaster/>
 
 <style>
   .root {
