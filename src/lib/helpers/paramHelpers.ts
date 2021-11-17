@@ -37,8 +37,7 @@ export const getParams = (text: string): Param[] => {
 	return novelParams;
 };
 
-export const applyFilledParams = (text: string, params: FilledParam[]): string =>
-	params.reduce(
-		(text, param) => (param.fillValue ? text.replaceAll(param.label, param.fillValue) : text),
-		text
-	);
+export const applyFilledParams = (text: string, params: FilledParam[]): string => {
+	const valueMap = new Map(params.map(param => [param.label, param.fillValue]));
+	return text.replaceAll(/\$[0-9]+/g, (label: string) => valueMap.get(label) ?? label);
+};	
