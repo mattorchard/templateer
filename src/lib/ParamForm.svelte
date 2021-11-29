@@ -6,6 +6,7 @@
 	import { FilledParam } from '$lib/helpers/paramHelpers';
 	import { readFromClipboard, writeToClipboard } from '$lib/helpers/clipboardHelpers';
 	import { notificationsStore } from '$lib/stores/notificationsStore';
+	import { valueAsSql } from '$lib/helpers/sqlValueHelpers';
 	export let params: Param[];
 	const dispatch = createEventDispatcher();
 
@@ -43,7 +44,7 @@
 			}
 			params.forEach(param => {
 				const index = param.id - 1;
-				fillValuesMap[param.label] = rows[index] ?? fillValuesMap[param.label];
+				fillValuesMap[param.label] = valueAsSql(rows[index]) || fillValuesMap[param.label];
 			})
 			notificationsStore.info("Pasted params");
 		} catch (error) {
