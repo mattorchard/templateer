@@ -19,10 +19,20 @@
 		};
 
 		monaco = await import('monaco-editor');
+		const themeName = 'vs-dark-highlight-params'
+		monaco.editor.defineTheme(themeName, {
+			base: 'vs-dark',
+			inherit: true,
+			rules: [
+				{ token: 'string.sql', foreground: '00DC80' },
+				{ token: 'number.sql', foreground: 'FF00DC' },
+			],
+			colors: { }
+		});
 		editor = monaco.editor.create(divEl, {
 			value,
 			language: 'pgsql',
-			theme: 'vs-dark',
+			theme: themeName,
 			scrollBeyondLastLine: false,
 			minimap: {
 				enabled: false
