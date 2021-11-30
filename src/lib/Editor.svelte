@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type Monaco from 'monaco-editor';
 	import { onMount } from 'svelte';
-	import PsqlWorker from 'monaco-editor/esm/vs/basic-languages/pgsql/pgsql.js?worker';
+	// import PsqlWorker from 'monaco-editor/esm/vs/basic-languages/pgsql/pgsql.js?worker';
+	import PsqlWorker from './langs/pgsql-param.js?worker'
+	import * as psqlTemplateLang from './langs/pgsql-param.js'
 	export let value: string;
 
 
@@ -19,19 +21,25 @@
 		};
 
 		monaco = await import('monaco-editor');
+
+		const languageName = "posgres-template";
+		monaco.languages.register({id: languageName});
+		monaco.languages.setLanguageConfiguration(languageName, psqlTemplateLang.conf)
+		monaco.languages.setMonarchTokensProvider(languageName, psqlTemplateLang.language)
+
 		const themeName = 'vs-dark-highlight-params'
 		monaco.editor.defineTheme(themeName, {
 			base: 'vs-dark',
 			inherit: true,
 			rules: [
 				{ token: 'string.sql', foreground: '00DC80' },
-				{ token: 'number.sql', foreground: 'FF00DC' },
+				{ token: 'custom-param.sql', foreground: 'FF00DC' },
 			],
 			colors: { }
 		});
 		editor = monaco.editor.create(divEl, {
 			value,
-			language: 'pgsql',
+			language: languageName,
 			theme: themeName,
 			scrollBeyondLastLine: false,
 			minimap: {
